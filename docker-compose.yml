@@ -1,0 +1,22 @@
+services:
+  orbslam3_dev:
+    image: orbslam3_dev:latest
+    container_name: orbslam3_dev
+    stdin_open: true
+    tty: true
+    env_file:
+      - '.env'
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+      - ${HOST_INPUT_DIR}:${CONTAINER_INPUT_DIR}:rw
+      - ${HOST_OUTPUT_DIR}:${CONTAINER_OUTPUT_DIR}:rw
+      - ./vslam_ros:/root/vslam_ros:rw
+      - ./third_party/dev_utils/cpp/.vscode:/root/vslam_ros/.vscode:rw
+      - type: bind
+        source: ./third_party/dev_utils/cpp/.clang-format
+        target: /root/vslam_ros/.clang-format
+      - ./vslam_ros/vslam_rospkg:/root/catkin_ws/src/vslam_rospkg:rw
+      - ./third_party/dev_utils/cpp/.vscode:/root/catkin_ws/.vscode:rw
+      - type: bind
+        source: ./third_party/dev_utils/cpp/.clang-format
+        target: /root/catkin_ws/.clang-format
